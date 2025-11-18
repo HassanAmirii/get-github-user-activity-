@@ -1,3 +1,15 @@
+const minimist = require("minimist");
+
+const option = {
+  string: "username",
+
+  alias: {
+    username: "u",
+  },
+};
+
+const args = minimist(process.argv.slice(2), option);
+const githubUsername = args.username;
 async function githubUserActivity(username) {
   const url = `https://api.github.com/users/${username}/events`;
 
@@ -21,4 +33,4 @@ async function githubUserActivity(username) {
     console.error(error);
   }
 }
-githubUserActivity("HassanAmirii");
+githubUserActivity(githubUsername);
