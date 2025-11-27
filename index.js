@@ -71,15 +71,26 @@ function summarizeEventSummary(event) {
 }
 
 async function main() {
+  let topThreeEventArray;
   const eventArray = await githubUserActivity(githubUsername);
   if (eventArray === null) return;
   if (eventArray.length === 0) {
     console.log(`no recent activity found for user:- ${githubUsername}`);
     return;
   }
-  console.log(`\n - recent activities for ${githubUsername} \n `);
-  eventArray.forEach((event) => {
-    console.log(summarizeEventSummary(event));
-  });
+  if (eventArray.length >= 3) {
+    topThreeEventArray = eventArray.slice(0, 3);
+    console.log(`\n - recent activities for ${githubUsername} \n `);
+    topThreeEventArray.forEach((event) => {
+      console.log(summarizeEventSummary(event));
+      return;
+    });
+  } else {
+    console.log(`\n - recent activities for ${githubUsername} \n `);
+    eventArray.forEach((event) => {
+      console.log(summarizeEventSummary(event));
+    });
+  }
 }
+
 main();
